@@ -1,5 +1,7 @@
-
+from dotenv import load_dotenv
 import oracledb
+import os 
+load_dotenv()
 from datetime import datetime, timedelta
 
 
@@ -9,24 +11,24 @@ ultima_captura = datetime.now() - timedelta(hours=3)
 def obter_conexao():
     conexao = None
     try:
-        conexao = oracledb.connect(user="admin", password="123", dsn="mock_dsn")
+        conexao = oracledb.connect(user = os.getenv('DB_USER'), password = os.getenv('DB_PASSWORD'), dsn = os.getenv('DB_DSN'))
 
         print("Conexão estabelecida com sucesso.")
     
     except oracledb.Error as e:
         print(f"Erro técnico detectado: {e}")
-
-    #finally:
-        #print("Encerrando operação de arquivo.")
-        #if conexao is not None:
-            #conexao.close()
     return conexao
 
 
 conexao_ativa = obter_conexao()
 try:
     if conexao_ativa is not None:
-        print("Simulando execução de query DQL")
+        meu_cursor = conexao_ativa.cursor()
+        meu_cursor.execute("SELECT MAX(HORA_CAPTURA) FROM ALMASPASSAGEIRO WHERE ID_PASSAGEIRO = 1")
+        resultado = meu_cursor.fetchone()
+        print(resultado)
+        meu_cursor.close()
+        
     else:
         print("Sistema operando em modo degradado. Banco offline.")
 
