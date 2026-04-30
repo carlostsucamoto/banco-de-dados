@@ -55,3 +55,7 @@ def verificar_disponibilidade_alma(id_jogador):
             conexao_ativa.close()
             print("Conexão encerrada. Recursos liberados.")
     return status_captura
+
+if __name__ == '__main__':
+    pode_jogar  = verificar_disponibilidade_alma( int(input("Digite seu Id")))
+    print(f"Status retornado para o front-end: {pode_jogar}")
