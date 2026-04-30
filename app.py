@@ -16,12 +16,12 @@ def obter_conexao():
         print(f"Erro técnico detectado: {e}")
     return conexao
 
-
+jogador_logado = 1
 conexao_ativa = obter_conexao()
 try:
     if conexao_ativa is not None:
         meu_cursor = conexao_ativa.cursor()
-        meu_cursor.execute("SELECT MAX(HORA_CAPTURA) FROM ALMASPASSAGEIRO WHERE ID_PASSAGEIRO = 1")
+        meu_cursor.execute("SELECT MAX(HORA_CAPTURA) FROM ALMASPASSAGEIRO WHERE ID_PASSAGEIRO =:id_passageiro",[jogador_logado])
         resultado = meu_cursor.fetchone()
 
 
