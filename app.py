@@ -57,5 +57,10 @@ def verificar_disponibilidade_alma(id_jogador):
     return status_captura
 
 if __name__ == '__main__':
-    pode_jogar  = verificar_disponibilidade_alma( int(input("Digite seu Id")))
-    print(f"Status retornado para o front-end: {pode_jogar}")
+    try:
+        pode_jogar  = verificar_disponibilidade_alma( int(input("Digite seu Id: ")))
+        print(f"{pode_jogar}")
+    except ValueError:
+        print("Entrada inválida")
+
+        
